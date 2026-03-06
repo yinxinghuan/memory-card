@@ -4,6 +4,7 @@ const MESSAGES: Record<Locale, Record<string, string>> = {
   zh: {
     title: '记忆翻牌',
     subtitle: '翻开匹配相同的角色',
+    rule: '翻开卡片，找出所有匹配的角色对',
     startBtn: '开始游戏',
     replayBtn: '再玩一次',
     homeBtn: '返回',
@@ -26,6 +27,7 @@ const MESSAGES: Record<Locale, Record<string, string>> = {
   en: {
     title: 'MEMORY',
     subtitle: 'Match the pairs',
+    rule: 'Flip cards and match all character pairs',
     startBtn: 'Start',
     replayBtn: 'Play Again',
     homeBtn: 'Home',

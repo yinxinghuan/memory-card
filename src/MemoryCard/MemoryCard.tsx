@@ -22,6 +22,9 @@ const CARD_DEFS = [
   { id: 'ghost_side',     image: ghostSideImg,     name: 'ghost_side' },
 ];
 
+// Character previews shown on start screen (front-facing 4)
+const PREVIEW_CHARS = [guitaristImg, coderImg, hackerImg, ghostImg];
+
 const MemoryCard = React.memo(
   forwardRef<HTMLDivElement, MemoryCardProps>((_props, ref) => {
     const { t } = useLocale();
@@ -67,17 +70,33 @@ const MemoryCard = React.memo(
         {phase === 'idle' && (
           <div className="mc__overlay">
             <div className="mc__modal">
-              <div className="mc__modal-icon">🃏</div>
-              <h1 className="mc__modal-title">{t('title')}</h1>
-              <p className="mc__modal-sub">{t('subtitle')}</p>
-              <div className="mc__modal-info">
-                <span>{totalPairs} {t('pairs')} · 2×4</span>
+              {/* Title — always English */}
+              <div className="mc__modal-hero">
+                <h1 className="mc__modal-title">
+                  <span className="mc__modal-title-line">FLIP</span>
+                  <span className="mc__modal-title-amp">&</span>
+                  <span className="mc__modal-title-line">MATCH</span>
+                </h1>
               </div>
+
+              {/* Character preview */}
+              <div className="mc__modal-chars">
+                {PREVIEW_CHARS.map((img, i) => (
+                  <div key={i} className="mc__modal-char">
+                    <img src={img} alt="" draggable={false} />
+                  </div>
+                ))}
+              </div>
+
+              {/* Rules */}
+              <p className="mc__modal-rule">{t('rule')}</p>
+
               {best && (
                 <div className="mc__modal-best">
                   {t('best')}：{best.moves} {t('moves')} · {formatTime(best.time)}
                 </div>
               )}
+
               <button className="mc__btn mc__btn--start" onClick={startGame}>
                 {t('startBtn')}
               </button>
@@ -90,7 +109,7 @@ const MemoryCard = React.memo(
           <div className="mc__overlay">
             <div className="mc__modal mc__modal--won">
               <div className="mc__modal-icon">🎉</div>
-              <h2 className="mc__modal-title">{t('won')}</h2>
+              <h2 className="mc__modal-title mc__modal-title--won">{t('won')}</h2>
               {isNewRecord && <div className="mc__new-record">{t('newRecord')}</div>}
               <div className="mc__result">
                 <div className="mc__result-row">
