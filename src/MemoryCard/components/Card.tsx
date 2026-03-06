@@ -1,3 +1,4 @@
+import aigramLogo from '../img/aigram.svg';
 import React from 'react';
 import type { CardInstance } from '../types';
 import './Card.less';
@@ -20,7 +21,7 @@ const Card = React.memo(function Card({ card, onClick }: CardProps) {
       <div className="mc-card__inner">
         <div className="mc-card__back">
           <div className="mc-card__back-pattern" />
-          <span className="mc-card__back-logo">Aigram</span>
+          <img className="mc-card__back-logo" src={aigramLogo} alt="Aigram" draggable={false} />
         </div>
         <div className="mc-card__front">
           <img
