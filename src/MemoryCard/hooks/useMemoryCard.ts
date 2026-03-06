@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import type { CardDef, CardInstance, GamePhase } from '../types';
+import { resumeAudio, playFlipSound, playMatchSound, playMismatchSound, playWinSound } from '../utils/sounds';
 
 const FLIP_BACK_DELAY = 900; // ms before mismatched cards flip back
 const STORAGE_KEY = 'mc_best';
@@ -63,6 +64,7 @@ export function useMemoryCard(defs: CardDef[]) {
   }, [phase]);
 
   const startGame = useCallback(() => {
+    resumeAudio();
     flippedRef.current = [];
     lockRef.current = false;
     setCards(buildDeck(defs));
@@ -92,6 +94,8 @@ export function useMemoryCard(defs: CardDef[]) {
       if (card.isFlipped || card.isMatched) return prev;
       if (flippedRef.current.length >= 2) return prev;
 
+      playFlipSound();
+
       const next = prev.map((c) =>
         c.instanceId === instanceId ? { ...c, isFlipped: true } : c
       );
@@ -115,6 +119,7 @@ export function useMemoryCard(defs: CardDef[]) {
           // Check win
           const allMatched = matched.every((c) => c.isMatched);
           if (allMatched) {
+            playWinSound();
             setPhase('won');
             setMoves((m) => {
               const finalMoves = m; // already incremented above
@@ -131,9 +136,11 @@ export function useMemoryCard(defs: CardDef[]) {
               return m;
             });
           }
+          if (!allMatched) playMatchSound();
           return matched;
         } else {
           // No match — flip back after delay
+          playMismatchSound();
           lockRef.current = true;
           setTimeout(() => {
             flippedRef.current = [];
