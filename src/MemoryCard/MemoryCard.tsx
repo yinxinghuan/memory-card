@@ -8,21 +8,13 @@ import guitaristImg from './img/guitarist.png';
 import coderImg from './img/coder.png';
 import hackerImg from './img/hacker.png';
 import ghostImg from './img/ghost.png';
-import guitaristSideImg from './img/guitarist_side.png';
-import coderSideImg from './img/coder_side.png';
-import hackerSideImg from './img/hacker_side.png';
-import ghostSideImg from './img/ghost_side.png';
 import './MemoryCard.less';
 
 const CARD_DEFS = [
-  { id: 'guitarist',      image: guitaristImg,     name: 'guitarist' },
-  { id: 'guitarist_side', image: guitaristSideImg, name: 'guitarist_side' },
-  { id: 'coder',          image: coderImg,         name: 'coder' },
-  { id: 'coder_side',     image: coderSideImg,     name: 'coder_side' },
-  { id: 'hacker',         image: hackerImg,        name: 'hacker' },
-  { id: 'hacker_side',    image: hackerSideImg,    name: 'hacker_side' },
-  { id: 'ghost',          image: ghostImg,         name: 'ghost' },
-  { id: 'ghost_side',     image: ghostSideImg,     name: 'ghost_side' },
+  { id: 'guitarist', image: guitaristImg, name: 'guitarist' },
+  { id: 'coder',     image: coderImg,     name: 'coder' },
+  { id: 'hacker',    image: hackerImg,    name: 'hacker' },
+  { id: 'ghost',     image: ghostImg,     name: 'ghost' },
 ];
 
 const MemoryCard = React.memo(
@@ -72,7 +64,7 @@ const MemoryCard = React.memo(
               <h1 className="mc__modal-title">{t('title')}</h1>
               <p className="mc__modal-sub">{t('subtitle')}</p>
               <div className="mc__modal-info">
-                <span>{totalPairs} {t('pairs')} · 4×4</span>
+                <span>{totalPairs} {t('pairs')} · 2×4</span>
               </div>
               {best && (
                 <div className="mc__modal-best">
