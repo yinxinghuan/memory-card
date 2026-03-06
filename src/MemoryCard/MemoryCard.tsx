@@ -10,6 +10,7 @@ import coderImg from './img/coder.png';
 import hackerImg from './img/hacker.png';
 import ghostImg from './img/ghost.png';
 import ghostSideImg from './img/ghost_side.png';
+import aigramLogo from './img/aigram.svg';
 import './MemoryCard.less';
 
 const CARD_DEFS = [
@@ -35,6 +36,8 @@ const MemoryCard = React.memo(
     return (
       <div className="mc" ref={ref}>
         {showSplash && <SplashScreen onDone={() => setShowSplash(false)} />}
+
+        <img className="mc__watermark" src={aigramLogo} alt="Aigram" draggable={false} />
 
         {/* Header */}
         {phase === 'playing' && (
