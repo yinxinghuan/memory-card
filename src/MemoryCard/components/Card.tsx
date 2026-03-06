@@ -20,7 +20,7 @@ const Card = React.memo(function Card({ card, onClick }: CardProps) {
       <div className="mc-card__inner">
         <div className="mc-card__back">
           <div className="mc-card__back-pattern" />
-          <span className="mc-card__back-icon">🃏</span>
+          <span className="mc-card__back-logo">Aigram</span>
         </div>
         <div className="mc-card__front">
           <img

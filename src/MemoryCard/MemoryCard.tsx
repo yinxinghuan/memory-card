@@ -5,16 +5,20 @@ import { useLocale } from './i18n';
 import GameBoard from './components/GameBoard';
 import SplashScreen from './components/SplashScreen';
 import guitaristImg from './img/guitarist.png';
+import guitaristSideImg from './img/guitarist_side.png';
 import coderImg from './img/coder.png';
 import hackerImg from './img/hacker.png';
 import ghostImg from './img/ghost.png';
+import ghostSideImg from './img/ghost_side.png';
 import './MemoryCard.less';
 
 const CARD_DEFS = [
-  { id: 'guitarist', image: guitaristImg, name: 'guitarist' },
-  { id: 'coder',     image: coderImg,     name: 'coder' },
-  { id: 'hacker',    image: hackerImg,    name: 'hacker' },
-  { id: 'ghost',     image: ghostImg,     name: 'ghost' },
+  { id: 'guitarist',      image: guitaristImg,     name: 'guitarist' },
+  { id: 'coder',          image: coderImg,         name: 'coder' },
+  { id: 'hacker',         image: hackerImg,        name: 'hacker' },
+  { id: 'ghost',          image: ghostImg,         name: 'ghost' },
+  { id: 'guitarist_side', image: guitaristSideImg, name: 'guitarist_side' },
+  { id: 'ghost_side',     image: ghostSideImg,     name: 'ghost_side' },
 ];
 
 const MemoryCard = React.memo(
