@@ -7,11 +7,9 @@ import SplashScreen from './components/SplashScreen';
 import guitaristImg from './img/guitarist.png';
 import guitaristHappyImg from './img/guitarist_happy.png';
 import coderImg from './img/coder.png';
-import coderShyImg from './img/coder_shy.png';
 import hackerImg from './img/hacker.png';
 import hackerSurprisedImg from './img/hacker_surprised.png';
 import ghostImg from './img/ghost.png';
-import ghostHappyImg from './img/ghost_happy.png';
 import aigramLogo from './img/aigram.svg';
 import './MemoryCard.less';
 
@@ -19,11 +17,9 @@ const CARD_DEFS = [
   { id: 'guitarist',          image: guitaristImg,         name: 'guitarist' },
   { id: 'guitarist_happy',    image: guitaristHappyImg,    name: 'guitarist_happy' },
   { id: 'coder',              image: coderImg,             name: 'coder' },
-  { id: 'coder_shy',          image: coderShyImg,          name: 'coder_shy' },
   { id: 'hacker',             image: hackerImg,            name: 'hacker' },
   { id: 'hacker_surprised',   image: hackerSurprisedImg,   name: 'hacker_surprised' },
   { id: 'ghost',              image: ghostImg,             name: 'ghost' },
-  { id: 'ghost_happy',        image: ghostHappyImg,        name: 'ghost_happy' },
 ];
 
 // Character previews shown on start screen (front-facing 4)
