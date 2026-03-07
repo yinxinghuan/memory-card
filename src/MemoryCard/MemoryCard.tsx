@@ -1,4 +1,4 @@
-import React, { forwardRef, useState, useMemo } from 'react';
+import React, { forwardRef, useState } from 'react';
 import type { MemoryCardProps } from './types';
 import { useMemoryCard } from './hooks/useMemoryCard';
 import { useLocale } from './i18n';
@@ -6,23 +6,52 @@ import GameBoard from './components/GameBoard';
 import SplashScreen from './components/SplashScreen';
 import guitaristImg from './img/guitarist.png';
 import guitaristHappyImg from './img/guitarist_happy.png';
+import guitaristSadImg from './img/guitarist_sad.png';
+import guitaristShyImg from './img/guitarist_shy.png';
+import guitaristSurprisedImg from './img/guitarist_surprised.png';
 import coderImg from './img/coder.png';
+import coderHappyImg from './img/coder_happy.png';
+import coderSadImg from './img/coder_sad.png';
+import coderShyImg from './img/coder_shy.png';
+import coderSurprisedImg from './img/coder_surprised.png';
 import hackerImg from './img/hacker.png';
+import hackerHappyImg from './img/hacker_happy.png';
+import hackerSadImg from './img/hacker_sad.png';
+import hackerShyImg from './img/hacker_shy.png';
 import hackerSurprisedImg from './img/hacker_surprised.png';
 import ghostImg from './img/ghost.png';
+import ghostHappyImg from './img/ghost_happy.png';
+import ghostSadImg from './img/ghost_sad.png';
+import ghostShyImg from './img/ghost_shy.png';
+import ghostSurprisedImg from './img/ghost_surprised.png';
 import aigramLogo from './img/aigram.svg';
 import './MemoryCard.less';
 
-const CARD_DEFS = [
-  { id: 'guitarist',          image: guitaristImg,         name: 'guitarist' },
-  { id: 'guitarist_happy',    image: guitaristHappyImg,    name: 'guitarist_happy' },
-  { id: 'coder',              image: coderImg,             name: 'coder' },
-  { id: 'hacker',             image: hackerImg,            name: 'hacker' },
-  { id: 'hacker_surprised',   image: hackerSurprisedImg,   name: 'hacker_surprised' },
-  { id: 'ghost',              image: ghostImg,             name: 'ghost' },
+// Full pool of 20 cards — 6 are randomly selected each game
+const CARD_POOL = [
+  { id: 'guitarist',           image: guitaristImg,          name: 'guitarist' },
+  { id: 'guitarist_happy',     image: guitaristHappyImg,     name: 'guitarist_happy' },
+  { id: 'guitarist_sad',       image: guitaristSadImg,       name: 'guitarist_sad' },
+  { id: 'guitarist_shy',       image: guitaristShyImg,       name: 'guitarist_shy' },
+  { id: 'guitarist_surprised', image: guitaristSurprisedImg, name: 'guitarist_surprised' },
+  { id: 'coder',               image: coderImg,              name: 'coder' },
+  { id: 'coder_happy',         image: coderHappyImg,         name: 'coder_happy' },
+  { id: 'coder_sad',           image: coderSadImg,           name: 'coder_sad' },
+  { id: 'coder_shy',           image: coderShyImg,           name: 'coder_shy' },
+  { id: 'coder_surprised',     image: coderSurprisedImg,     name: 'coder_surprised' },
+  { id: 'hacker',              image: hackerImg,             name: 'hacker' },
+  { id: 'hacker_happy',        image: hackerHappyImg,        name: 'hacker_happy' },
+  { id: 'hacker_sad',          image: hackerSadImg,          name: 'hacker_sad' },
+  { id: 'hacker_shy',          image: hackerShyImg,          name: 'hacker_shy' },
+  { id: 'hacker_surprised',    image: hackerSurprisedImg,    name: 'hacker_surprised' },
+  { id: 'ghost',               image: ghostImg,              name: 'ghost' },
+  { id: 'ghost_happy',         image: ghostHappyImg,         name: 'ghost_happy' },
+  { id: 'ghost_sad',           image: ghostSadImg,           name: 'ghost_sad' },
+  { id: 'ghost_shy',           image: ghostShyImg,           name: 'ghost_shy' },
+  { id: 'ghost_surprised',     image: ghostSurprisedImg,     name: 'ghost_surprised' },
 ];
 
-// Character previews shown on start screen (front-facing 4)
+// Character previews shown on start screen
 const PREVIEW_CHARS = [guitaristImg, coderImg, hackerImg, ghostImg];
 
 const MemoryCard = React.memo(
@@ -30,9 +59,8 @@ const MemoryCard = React.memo(
     const { t } = useLocale();
     const [showSplash, setShowSplash] = useState(true);
 
-    const defs = useMemo(() => CARD_DEFS, []);
     const { cards, phase, moves, time, best, isNewRecord, matchedCount, totalPairs, startGame, resetGame, flipCard } =
-      useMemoryCard(defs);
+      useMemoryCard(CARD_POOL, 6);
 
     const formatTime = (s: number) => `${s}${t('seconds')}`;
 

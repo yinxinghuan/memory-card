@@ -14,6 +14,10 @@ function shuffle<T>(arr: T[]): T[] {
   return a;
 }
 
+function pickDefs(pool: CardDef[], n: number): CardDef[] {
+  return shuffle(pool).slice(0, n);
+}
+
 function buildDeck(defs: CardDef[]): CardInstance[] {
   // Each def appears twice (a pair)
   const doubled = [...defs, ...defs];
@@ -38,8 +42,9 @@ function saveBest(moves: number, time: number) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify({ moves, time }));
 }
 
-export function useMemoryCard(defs: CardDef[]) {
-  const [cards, setCards] = useState<CardInstance[]>(() => buildDeck(defs));
+export function useMemoryCard(pool: CardDef[], defsPerGame = 6) {
+  const defsRef = useRef<CardDef[]>(pickDefs(pool, defsPerGame));
+  const [cards, setCards] = useState<CardInstance[]>(() => buildDeck(defsRef.current));
   const [phase, setPhase] = useState<GamePhase>('idle');
   const [moves, setMoves] = useState(0);
   const [time, setTime] = useState(0);
@@ -65,24 +70,25 @@ export function useMemoryCard(defs: CardDef[]) {
 
   const startGame = useCallback(() => {
     resumeAudio();
+    defsRef.current = pickDefs(pool, defsPerGame);
     flippedRef.current = [];
     lockRef.current = false;
-    setCards(buildDeck(defs));
+    setCards(buildDeck(defsRef.current));
     setMoves(0);
     setTime(0);
     setIsNewRecord(false);
     setPhase('playing');
-  }, [defs]);
+  }, [pool, defsPerGame]);
 
   const resetGame = useCallback(() => {
     flippedRef.current = [];
     lockRef.current = false;
-    setCards(buildDeck(defs));
+    setCards(buildDeck(defsRef.current));
     setMoves(0);
     setTime(0);
     setIsNewRecord(false);
     setPhase('idle');
-  }, [defs]);
+  }, []);
 
   const flipCard = useCallback((instanceId: number) => {
     if (phase !== 'playing') return;
@@ -162,5 +168,5 @@ export function useMemoryCard(defs: CardDef[]) {
 
   const matchedCount = cards.filter((c) => c.isMatched).length / 2;
 
-  return { cards, phase, moves, time, best, isNewRecord, matchedCount, totalPairs: defs.length, startGame, resetGame, flipCard };
+  return { cards, phase, moves, time, best, isNewRecord, matchedCount, totalPairs: defsRef.current.length, startGame, resetGame, flipCard };
 }
