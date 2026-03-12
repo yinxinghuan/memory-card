@@ -1,4 +1,4 @@
-import React, { forwardRef, useState, useEffect } from 'react';
+import React, { forwardRef, useState } from 'react';
 import type { MemoryCardProps } from './types';
 import { useMemoryCard } from './hooks/useMemoryCard';
 import { useLocale } from './i18n';
@@ -58,21 +58,6 @@ const MemoryCard = React.memo(
   forwardRef<HTMLDivElement, MemoryCardProps>((_props, ref) => {
     const { t } = useLocale();
     const [showSplash, setShowSplash] = useState(true);
-    const [imagesReady, setImagesReady] = useState(false);
-
-    // Preload all card images during start screen
-    useEffect(() => {
-      let loaded = 0;
-      const total = CARD_POOL.length;
-      CARD_POOL.forEach(({ image }) => {
-        const img = new Image();
-        img.onload = img.onerror = () => {
-          loaded += 1;
-          if (loaded === total) setImagesReady(true);
-        };
-        img.src = image;
-      });
-    }, []);
 
     const { cards, phase, moves, time, best, isNewRecord, matchedCount, totalPairs, startGame, resetGame, flipCard } =
       useMemoryCard(CARD_POOL, 6);
@@ -141,11 +126,10 @@ const MemoryCard = React.memo(
               )}
 
               <button
-                className={`mc__btn mc__btn--start ${!imagesReady ? 'mc__btn--loading' : ''}`}
+                className="mc__btn mc__btn--start"
                 onClick={startGame}
-                disabled={!imagesReady}
               >
-                {imagesReady ? t('startBtn') : t('loading')}
+                {t('startBtn')}
               </button>
             </div>
           </div>
