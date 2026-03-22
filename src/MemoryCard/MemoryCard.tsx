@@ -89,6 +89,9 @@ const MemoryCard = React.memo(
         )}
 
         <img className="mc__watermark" src={aigramLogo} alt="Aigram" draggable={false} />
+        {phase === 'idle' && (
+          <button className="mc__lb-icon" onPointerDown={() => setShowLeaderboard(true)}>🏆</button>
+        )}
 
         {/* Header */}
         {phase === 'playing' && (
@@ -150,9 +153,6 @@ const MemoryCard = React.memo(
                 onClick={startGame}
               >
                 {t('startBtn')}
-              </button>
-              <button className="mc__btn mc__btn--lb" onPointerDown={() => setShowLeaderboard(true)}>
-                🏆 排行榜
               </button>
             </div>
           </div>
