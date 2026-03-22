@@ -1,7 +1,8 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import type { MemoryCardProps } from './types';
 import { useMemoryCard } from './hooks/useMemoryCard';
 import { useLocale } from './i18n';
+import { useGameScore, Leaderboard } from '@shared/leaderboard';
 import GameBoard from './components/GameBoard';
 import SplashScreen from './components/SplashScreen';
 import guitaristImg from './img/guitarist.png';
@@ -58,15 +59,34 @@ const MemoryCard = React.memo(
   forwardRef<HTMLDivElement, MemoryCardProps>((_props, ref) => {
     const { t } = useLocale();
     const [showSplash, setShowSplash] = useState(true);
+    const [showLeaderboard, setShowLeaderboard] = useState(false);
+    const { isInAigram, submitScore, fetchGlobalLeaderboard, fetchFriendsLeaderboard } = useGameScore('memory-card');
 
     const { cards, phase, moves, time, best, isNewRecord, matchedCount, totalPairs, startGame, resetGame, flipCard } =
       useMemoryCard(CARD_POOL, 6);
+
+    // 游戏胜利时提交分数（步数少+用时短=高分）
+    useEffect(() => {
+      if (phase === 'won') {
+        const score = Math.max(0, 500 - moves * 15 - Math.floor(time));
+        submitScore(score);
+      }
+    }, [phase]);
 
     const formatTime = (s: number) => `${s}${t('seconds')}`;
 
     return (
       <div className="mc" ref={ref}>
         {showSplash && <SplashScreen onDone={() => setShowSplash(false)} />}
+        {showLeaderboard && (
+          <Leaderboard
+            gameName="Flip & Match"
+            isInAigram={isInAigram}
+            onClose={() => setShowLeaderboard(false)}
+            fetchGlobal={fetchGlobalLeaderboard}
+            fetchFriends={fetchFriendsLeaderboard}
+          />
+        )}
 
         <img className="mc__watermark" src={aigramLogo} alt="Aigram" draggable={false} />
 
@@ -130,6 +150,9 @@ const MemoryCard = React.memo(
                 onClick={startGame}
               >
                 {t('startBtn')}
+              </button>
+              <button className="mc__btn mc__btn--lb" onPointerDown={() => setShowLeaderboard(true)}>
+                🏆 排行榜
               </button>
             </div>
           </div>
