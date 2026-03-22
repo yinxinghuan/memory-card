@@ -4,7 +4,7 @@ import path from 'path';
 
 export default defineConfig({
   base: '/memory-card/',
-  resolve: { alias: { '@shared': path.resolve(__dirname, '../shared') } },
+  resolve: { alias: { '@shared': path.resolve(__dirname, 'src/shared') } },
   plugins: [react()],
   css: {
     preprocessorOptions: {
