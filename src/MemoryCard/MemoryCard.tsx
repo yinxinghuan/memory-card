@@ -126,11 +126,23 @@ const MemoryCard = React.memo(
                 </h1>
               </div>
 
-              {/* Character preview */}
+              {/* Character preview — auto-flipping cards */}
               <div className="mc__modal-chars">
                 {PREVIEW_CHARS.map((img, i) => (
-                  <div key={i} className="mc__modal-char">
-                    <img src={img} alt="" draggable={false} />
+                  <div
+                    key={i}
+                    className="mc__modal-char"
+                    style={{ ['--flip-delay' as string]: `${i * 1.4}s` }}
+                  >
+                    <div className="mc__modal-char-inner">
+                      <div className="mc__modal-char-back">
+                        <div className="mc__modal-char-back-pattern" />
+                        <span className="mc__modal-char-back-logo">M</span>
+                      </div>
+                      <div className="mc__modal-char-front">
+                        <img src={img} alt="" draggable={false} />
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
