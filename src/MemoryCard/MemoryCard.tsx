@@ -60,7 +60,7 @@ const MemoryCard = React.memo(
     const { t } = useLocale();
     const [showSplash, setShowSplash] = useState(true);
     const [showLeaderboard, setShowLeaderboard] = useState(false);
-    const { isInAigram, submitScore, fetchGlobalLeaderboard, fetchFriendsLeaderboard } = useGameScore('memory-card');
+    const { isInAigram, submitScore, fetchLeaderboard } = useGameScore();
 
     const { cards, phase, moves, time, best, isNewRecord, matchedCount, totalPairs, startGame, resetGame, flipCard } =
       useMemoryCard(CARD_POOL, 6);
@@ -83,8 +83,7 @@ const MemoryCard = React.memo(
             gameName="Flip & Match"
             isInAigram={isInAigram}
             onClose={() => setShowLeaderboard(false)}
-            fetchGlobal={fetchGlobalLeaderboard}
-            fetchFriends={fetchFriendsLeaderboard}
+            fetch={fetchLeaderboard}
           />
         )}
 
