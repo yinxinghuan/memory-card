@@ -76,7 +76,7 @@ const MESSAGES: Record<Locale, Record<string, string>> = {
 };
 
 function detectLocale(): Locale {
-  const override = localStorage.getItem('mc_locale');
+  const override = alteruLocalStorage.getItem('mc_locale');
   if (override === 'en' || override === 'zh') return override;
   return navigator.language.toLowerCase().startsWith('zh') ? 'zh' : 'en';
 }
@@ -91,7 +91,7 @@ import { useState, useCallback } from 'react';
 export function useLocale() {
   const [locale, setLocaleState] = useState<Locale>(detectLocale);
   const setLocale = useCallback((l: Locale) => {
-    localStorage.setItem('mc_locale', l);
+    alteruLocalStorage.setItem('mc_locale', l);
     setLocaleState(l);
   }, []);
   const tFn = useCallback(

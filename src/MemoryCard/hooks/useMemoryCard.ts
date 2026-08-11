@@ -31,7 +31,7 @@ function buildDeck(defs: CardDef[]): CardInstance[] {
 
 function loadBest(): { moves: number; time: number } | null {
   try {
-    const s = localStorage.getItem(STORAGE_KEY);
+    const s = alteruLocalStorage.getItem(STORAGE_KEY);
     return s ? JSON.parse(s) : null;
   } catch {
     return null;
@@ -39,7 +39,7 @@ function loadBest(): { moves: number; time: number } | null {
 }
 
 function saveBest(moves: number, time: number) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify({ moves, time }));
+  alteruLocalStorage.setItem(STORAGE_KEY, JSON.stringify({ moves, time }));
 }
 
 export function useMemoryCard(pool: CardDef[], defsPerGame = 6) {
